@@ -7,7 +7,7 @@
     android:layout_margin="4dp"
     app:cardBackgroundColor="#38374f">
 
-    <android.support.constraint.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -57,5 +57,5 @@
             app:layout_constraintTop_toBottomOf="@+id/langImageView" />
 
 
-    </android.support.constraint.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </android.support.v7.widget.CardView>
