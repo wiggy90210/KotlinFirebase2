@@ -1,4 +1,4 @@
-package com.example.myapplication.Chooser
+package com.example.myapplication.QuizChooser
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
