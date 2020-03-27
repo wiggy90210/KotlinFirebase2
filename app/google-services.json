@@ -2,7 +2,7 @@
   "project_info": {
     "project_number": "1074922807704",
     "firebase_url": "https://quizandroidcgw.firebaseio.com",
-    "project_id": "quizandroidcgw",
+    "project_id": "MyApplication",
     "storage_bucket": "quizandroidcgw.appspot.com"
   },
   "client": [
@@ -10,7 +10,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:1074922807704:android:026d01d139e9d9c7",
         "android_client_info": {
-          "package_name": "pl.cgwisdom.quizzandrcgw"
+          "package_name": "com.example.myapplication"
         }
       },
       "oauth_client": [
@@ -18,7 +18,7 @@
           "client_id": "1074922807704-51h0nc0cnffs9silsu5voqrs4956e3gj.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "pl.cgwisdom.quizzandrcgw",
+            "package_name": "com.example.myapplication",
             "certificate_hash": "639200bf7552f9622af43233be02f729a49a100b"
           }
         },

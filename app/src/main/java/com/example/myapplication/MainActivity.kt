@@ -6,11 +6,19 @@ import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager.widget.ViewPager
+import com.example.myapplication.QuizChooser.QuizChooserFragment
+import com.example.myapplication.QuizChooser.QuizItem
 import com.google.android.material.bottomnavigation.BottomNavigationItemView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_main.*   // import layoutu #javassie
+import java.lang.IllegalStateException
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(),
+    QuizChooserFragment.OnStartQuizListener {
+
+    override fun onStartQuizSelected(quiz: QuizItem, quizName: String) {
+        Log.i("MAIN_ACTIVITY", "OnStartQuizSelected")
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,17 +39,16 @@ class MainActivity : AppCompatActivity() {
     private fun getFragmentPagerAdapter() =
         object : FragmentPagerAdapter(supportFragmentManager, FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
             override fun getItem(position: Int) = when (position) {     // when zwraca wartość (w tym przypadku oczekujemy Fragmentu)
-                FEED_ID -> NewsListFragment()
-                CHOOSER_ID -> QuizzChooserFragment()
-                PROFILE_ID -> ProfileFragment()
+                FEED_ID -> Fragment()//NewsListFragment()
+                CHOOSER_ID -> QuizChooserFragment()
+                PROFILE_ID -> Fragment()//ProfileFragment()
                 else -> {
                     Log.wtf("ValueOutOfBounds", "WTF!?")
+                    throw IllegalStateException("Wskazana wartość $position wychodzi poza zakres ViewPager'a")
                 }
             }
 
-            override fun getCount(): Int {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-            }
+            override fun getCount() = 3
 
         }
 
