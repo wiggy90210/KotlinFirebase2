@@ -98,11 +98,11 @@ class MainActivity : AppCompatActivity(),
 
     //region Obsługa interfejsów z fragmentów
     private fun getChooserListFragment() =
-        (supportFragmentManager.findFragmentByTag("android:switcher" + R.id.viewpager + ":" + CHOOSER_ID) as QuizChooserFragment)
+        (supportFragmentManager.findFragmentByTag("android:switcher:" + R.id.viewpager + ":" + CHOOSER_ID) as? QuizChooserFragment)
 
     override fun onStartQuizSelected(quiz: QuizItem, quizName: String) {
         Log.i("MAIN_ACTIVITY", "OnStartQuizSelected")
-        getChooserListFragment().loader_quiz.visibility = View.VISIBLE
+        getChooserListFragment()!!.loader_quiz.visibility = View.VISIBLE
         var quizset = ArrayList<QuestionItem>().apply {
             add(QuestionItem())
             add(QuestionItem())
