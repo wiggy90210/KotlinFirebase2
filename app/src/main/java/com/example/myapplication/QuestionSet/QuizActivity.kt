@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.os.CountDownTimer
-import android.os.PersistableBundle
 import android.view.View
 import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
@@ -31,13 +30,13 @@ import kotlin.collections.ArrayList
 class QuizActivity : AppCompatActivity() {
 
     private val questionList by lazy {
-        intent.extras!!.get(QUIZ_SET) as ArrayList<QuestionItem>        // "!!." -> non-null, ?. -> nullable
+        intent.extras?.get(QUIZ_SET) as ArrayList<QuestionItem>        // "!!." -> non-null, ?. -> nullable
     }
     private val quizTitle by lazy {
-        intent.extras!!.get(TITLE) as String
+        intent.extras?.get(TITLE) as String
     }
     private val quiz by lazy {      // "by lazy" - w momencie odwołania sę do wartości "quiz" wykona się blok kodu, który ją zainicjalizuje
-        intent.extras!!.get(QUIZ) as QuizItem
+        intent.extras?.get(QUIZ) as QuizItem
     }
 
     val successArray: BooleanArray by lazy {BooleanArray(questionList.size)}
@@ -51,19 +50,19 @@ class QuizActivity : AppCompatActivity() {
     /**
      * Odlicza czas przeznaczony na odpowiedź
      */
-    var countDown = getCountDownTimer()
+    lateinit var countDown: CountDownTimer// = getCountDownTimer()
     /**
      * Czas na przygotowanie kolejnego pytania
      * Jest to czas dla użytkownika na przeczytanie poprawnej odpowiedzi
      * w przypadku kiedy wybierze niepoprawną
      */
-    var prepareNext = getPrepareNextTimer()
+    lateinit var prepareNext: CountDownTimer //= getPrepareNextTimer()
     private var countDownRemain: Long = TIMER_VALUE
     private var prepareNextRemain: Long = PREPARE_VALUE
 
 
-    override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
-        super.onCreate(savedInstanceState, persistentState)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         setContentView(R.layout.quiz_activity)
         setLayout()
     }
@@ -81,6 +80,8 @@ class QuizActivity : AppCompatActivity() {
             progress.setCurrentStateNumber(StateProgressBar.StateNumber.values()[currentNumber])
             questionText.setSexyText(currentQuestionItem.question)
             setUpButtons()
+            countDown = getCountDownTimer()
+            setButtonsClickable(true)
             countDown.start()
         } else {
             returnResultFromQuiz()
@@ -98,27 +99,27 @@ class QuizActivity : AppCompatActivity() {
     }
 
     private fun setUpButtons() {
-        ans_a.setOnClickListener { onChoiceListener(false) }
-        ans_b.setOnClickListener { onChoiceListener(false) }
-        ans_c.setOnClickListener { onChoiceListener(false) }
+        ans_a.setOnClickListener ( onChoiceListener(false) )
+        ans_b.setOnClickListener ( onChoiceListener(false) )
+        ans_c.setOnClickListener ( onChoiceListener(false) )
         when (currentPositive) {
             1->{
                 ans_a.setSexyText(currentQuestionItem.positive)
-                ans_a.setOnClickListener { onChoiceListener(true) }
+                ans_a.setOnClickListener ( onChoiceListener(true) )
                 ans_b.setSexyText(getNegativeAnswers()[0])
                 ans_c.setSexyText(getNegativeAnswers()[1])
             }
             2->{
                 ans_a.setSexyText(getNegativeAnswers()[0])
                 ans_b.setSexyText(currentQuestionItem.positive)
-                ans_b.setOnClickListener { onChoiceListener(true) }
+                ans_b.setOnClickListener ( onChoiceListener(true) )
                 ans_c.setSexyText(getNegativeAnswers()[1])
             }
             3->{
                 ans_a.setSexyText(getNegativeAnswers()[0])
                 ans_b.setSexyText(getNegativeAnswers()[1])
                 ans_c.setSexyText(currentQuestionItem.positive)
-                ans_c.setOnClickListener { onChoiceListener(true) }
+                ans_c.setOnClickListener ( onChoiceListener(true) )
             }
         }
     }
@@ -170,6 +171,7 @@ class QuizActivity : AppCompatActivity() {
                     override fun onAnimationStart(animation: Animation?) {}
                 })
             }
+            this.startAnimation(anim)
         } else {
             this.text = text
         }
@@ -203,7 +205,7 @@ class QuizActivity : AppCompatActivity() {
     private fun getPrepareNextTimer(): CountDownTimer {
         return object : CountDownTimer(prepareNextRemain, 10) {
             override fun onFinish() {
-                resetCountDown()    // resetuję pierwszy timer
+                resetCountDownTimer()    // resetuję pierwszy timer
                 setButtonsClickable(true)
                 setButtonColorBrand(DefaultBootstrapBrand.SECONDARY)
                 currentNumber++
@@ -218,7 +220,7 @@ class QuizActivity : AppCompatActivity() {
         }
     }
 
-    private fun resetCountDown() {
+    private fun resetCountDownTimer() {
         countDownRemain = TIMER_VALUE
         prepareNextRemain = PREPARE_VALUE
         countDown = getCountDownTimer()
@@ -244,14 +246,14 @@ class QuizActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        if (!countDownRemain.equals(TIMER_VALUE)) {
+        /*if (!countDownRemain.equals(TIMER_VALUE)) {
             countDown = getCountDownTimer()
             countDown.start()
-        }
-        if(!prepareNextRemain.equals(PREPARE_VALUE)) {
+        }*/
+        /*if(!prepareNextRemain.equals(PREPARE_VALUE)) {
             prepareNext = getPrepareNextTimer()
             prepareNext.start()
-        }
+        }*/
     }
 
     companion object {

@@ -103,13 +103,15 @@ class MainActivity : AppCompatActivity(),
     override fun onStartQuizSelected(quiz: QuizItem, quizName: String) {
         Log.i("MAIN_ACTIVITY", "OnStartQuizSelected")
         getChooserListFragment()!!.loader_quiz.visibility = View.VISIBLE
-        var quizset = ArrayList<QuestionItem>().apply {
+        val quizset = ArrayList<QuestionItem>().apply {
             add(QuestionItem())
             add(QuestionItem())
             add(QuestionItem())
             add(QuestionItem())
             add(QuestionItem())
         }
+
+        getChooserListFragment()!!.loader_quiz.visibility = View.GONE
         navigateQuiz(quizset, quizName, quiz)
     }
 
