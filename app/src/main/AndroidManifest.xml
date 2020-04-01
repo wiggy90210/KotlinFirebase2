@@ -24,7 +24,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".QuestionSet.QuizActivity" />
+        <activity android:name=".QuestionSet.QuizActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Summary.QuizSummaryActivity"
+            android:theme="@style/customDialogTheme"/>
 
     </application>
 

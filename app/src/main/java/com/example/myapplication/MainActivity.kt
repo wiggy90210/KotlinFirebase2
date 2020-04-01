@@ -13,6 +13,7 @@ import com.example.myapplication.QuestionSet.QuestionItem
 import com.example.myapplication.QuestionSet.QuizActivity
 import com.example.myapplication.QuizChooser.QuizChooserFragment
 import com.example.myapplication.QuizChooser.QuizItem
+import com.example.myapplication.Summary.QuizSummaryActivity
 import com.google.android.material.bottomnavigation.BottomNavigationItemView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_main.*   // import layoutu #javassie
@@ -87,12 +88,25 @@ class MainActivity : AppCompatActivity(),
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK) {
-            when(resultCode) {
+            when(requestCode) {
                 QUIZ_ACTIVITY_REQUEST_CODE -> {
-                    // TODO navigate to summary
+                    navigateToSummaryActivity(data)
                 }
             }
         }
+    }
+
+    private fun navigateToSummaryActivity(data: Intent?) {
+        var intent = Intent(this, QuizSummaryActivity::class.java).apply {
+            if (QuizzApp.fUser != null) {
+                // TODO zasilić użytkownikiem
+                data?.putExtra(USER_NAME, "użytkownik")
+                data?.putExtra(USER_URL, "https://cdn.stocksnap.io/img-thumbs/960w/OGBFDCHPEZ.jpg")
+            }
+            putExtras(data!!.extras!!)
+        }
+        startActivityForResult(intent, QUIZ_SUMMARY_REQUEST_CODE)
+
     }
     //endregion
 
@@ -134,7 +148,11 @@ class MainActivity : AppCompatActivity(),
         const val TITLE = "title"
         const val QUIZ = "quiz"
 
-        const val QUIZ_ACTIVITY_REQUEST_CODE = 111
+        const val USER_NAME = "USER_NAME"
+        const val USER_URL = "USER_URL"
+
+        const val QUIZ_ACTIVITY_REQUEST_CODE = 154
+        const val QUIZ_SUMMARY_REQUEST_CODE = 155
 
     }
 }

@@ -94,7 +94,7 @@ class QuizActivity : AppCompatActivity() {
             putExtra(SUCCESS_SUMMARY, "Poprawne ${successArray.count({it})}/5")     //count() liczy wystąpienia "true", it - odwołani do obiektu na którym wywołuję metodę
             putExtra(POINTS, successArray.count({it}) * (quiz.level.ordinal + 1) * 39)  // wyliczam punkty za quiz "level" liczony od 0, więc dodaję 1 i mnożę razy 39, ot tak sobie (liczba pierwsza)
         }
-        setResult(Activity.RESULT_OK)
+        setResult(Activity.RESULT_OK, intent)
         finish()
     }
 
