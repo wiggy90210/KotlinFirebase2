@@ -9,6 +9,8 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager.widget.ViewPager
+import com.example.myapplication.News.NewsListFragment
+import com.example.myapplication.Profile.UserItem
 import com.example.myapplication.QuestionSet.QuestionItem
 import com.example.myapplication.QuestionSet.QuizActivity
 import com.example.myapplication.QuizChooser.QuizChooserFragment
@@ -22,7 +24,8 @@ import kotlinx.android.synthetic.main.fragment_quizitem_list.*
 import java.lang.IllegalStateException
 
 class MainActivity : AppCompatActivity(),
-    QuizChooserFragment.OnStartQuizListener {
+    QuizChooserFragment.OnStartQuizListener,
+    NewsListFragment.OnNewsInteractionListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -139,6 +142,14 @@ class MainActivity : AppCompatActivity(),
     }
     //endregion
 
+    override fun onUserSelected(user: UserItem, image: View) {
+       // TODO other user activity
+    }
+
+    override fun onLikeSelected(feedId: String, diff: Int) {
+       // TODO like feed
+    }
+
     companion object {
         const val FEED_ID = 0
         const val CHOOSER_ID = 1
@@ -155,4 +166,6 @@ class MainActivity : AppCompatActivity(),
         const val QUIZ_SUMMARY_REQUEST_CODE = 155
 
     }
+
+
 }
